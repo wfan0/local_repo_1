@@ -1,0 +1,7 @@
+a = 'lol'
+b = 'lol2'
+c = ''
+if a and b and c:
+	print('ok with a,b,c')
+if a and b:
+	print('ok with a and b')

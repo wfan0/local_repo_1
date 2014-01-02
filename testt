@@ -1,0 +1,36 @@
+#3 types of sequence data types: range, tuples, lists
+
+#---tuples (used for heterogeneous usually)
+empty_tuple = ()
+tuple_one_item = "one_item",
+tuple_one = 12345, "lol", "oppo" #immuatble
+x,y,z = tuple_one #unpack the tuple
+len(tuple_one) #print length of tuple
+
+print("dis shit")
+print(tuple_one)
+for i, v in enumerate(tuple_one):
+	print (i,v)
+
+
+#---lists
+empty_list = []
+list_one = [1,2,3]
+list_one.append(4)
+list_two = [-1,-2,-3]
+list_one.extend(list_two) #combines lists
+list_one.sort()
+list_one.remove(-1)
+
+
+print("waaaaa")
+words = ['cat', 'window', 'defenestrate']
+for w in words[:]:  # Loop over a slice copy of the entire list.
+	if len(w) > 6:
+		words.insert(0, w)
+
+print(words)
+
+print((1, 2, ('aa', 'ab'))   < (1, 'a', ('abc', 'a'), 4))
+
+

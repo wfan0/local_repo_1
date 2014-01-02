@@ -1,0 +1,62 @@
+from bs4 import BeautifulSoup
+
+l = """<li><a href="http://us.rd.yahoo.com/finance/external/xwscheats/SIG=13tqrmr4e/*http://wallstcheatsheet.com/stocks/analysts-agilents-split-may-increase-value-and-3-other-research-notes-to-check-out.html/?ref=YF">Analysts: Agilent\xe2\x80\x99s Split May Increase Value and 3 Other Research Notes to Check Out</a><cite>at Wall St. Cheat Sheet\xc2\xa0<span>(Fri, Sep 20)</span></cite></li>"""
+
+#def emoveTag(soup, tagname):
+    #for tag in soup.findAll(tagname):
+        #contents = tag.contents
+        #parent = tag.parent
+        #tag.extract()
+
+
+
+
+soup = BeautifulSoup(l)
+citation = soup.find('cite')
+#print(citation)
+
+citation = citation.text
+print(citation)
+
+atLocation = ''
+
+parens = citation.find('(')
+
+newCitation = (citation[0:parens-1]).encode('utf-8')
+print(newCitation)
+newCitation = newCitation.replace(u'\xc2\xa0', u' ')
+
+
+
+#newCitation.replace('\xc3\x82', '')
+
+#.replace('\xc3\x82', '')
+#replace('\xc3\x82', '') #extra one space back to remove encoding error
+#print(newCitation)
+
+#if 'at ' in newCitation:
+	#print(newCitation[3:])	
+
+
+
+#contents = citation.contents
+#for c in contents:
+	#print(c)
+
+
+#print(soup.find('a').encode('utf-8'))
+
+#print(citation.emoveTag(citation, "span"))
+#.text
+
+#citation = removeTag(citation, "b")
+
+#end = citation.rfind('(')
+#nl = citation[:end]
+#nl = nl.strip()
+
+#print(nl)
+
+
+
+#print(soup.find('a').get('href'))

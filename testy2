@@ -1,0 +1,22 @@
+l = 'Friday, September 27, 2013'
+
+def parseDate(str):
+	list = []
+	out = []
+	for i in range(len(str)):
+		if ',' == str[i]:
+			list.append(i)
+	comma1 = list[0]
+	comma2 = list[1]
+	DayName = str[:comma1]	
+	nameAndMonth = str[comma1+2:comma2]
+	spaceLoc = nameAndMonth.find(' ')
+	Month = nameAndMonth[:spaceLoc]
+	DayNum = nameAndMonth[spaceLoc+1:]
+	Year = str[comma2+2:]
+
+	out = [DayName,Month,DayNum,Year]
+	return out
+
+array = parseDate(l)
+print(array)

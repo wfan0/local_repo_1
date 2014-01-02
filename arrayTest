@@ -1,0 +1,9 @@
+month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+f = "February"
+
+if f in month_names:
+	print("yea")
+
+for m in month_names:
+	if m in f:
+		print ("yea2")

@@ -1,0 +1,87 @@
+#import urllib.request
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+from bs4 import BeautifulSoup
+import re
+import csv
+
+#must be for the text, no encodings
+def find_End_LINK (line) :
+	end_markers = ['ADVERTISEMENT', 'Advertisement']	
+	#finds the end of the text area
+	for end_mark in end_markers:
+		if end_mark in line:
+			return True
+
+	return False
+
+def contains_zacks_exclude_markers (line) :
+	exclude_markers = []	#for other stuff within string
+	if l == " ":   #if string is totally empty
+		return True
+	for exclude_mark in exclude_markers:
+		if exclude_mark in line:
+			return True
+
+	return False
+
+#--------------------
+def parseDate(str):
+	list = []
+	out = []
+	for i in range(len(str)):
+		if ',' == str[i]:
+			list.append(i)
+	comma1 = list[0]
+	comma2 = list[1]
+	comma3 = list[2]
+
+	DayName = str[:comma1]	
+	nameAndMonth = str[comma1+2:comma2]
+	spaceLoc = nameAndMonth.find(' ')
+	Month = nameAndMonth[:spaceLoc]
+	DayNum = nameAndMonth[spaceLoc+1:]
+	Year = str[comma2+2:]
+
+	out = [DayName,Month,DayNum,Year]
+	return out	
+#----------------------
+
+
+driver = webdriver.Firefox()
+driver.get("http://finance.yahoo.com/news/zacks-analyst-blog-highlights-ironwood-111505661.html")
+#driver.get("http://finance.yahoo.com/news/fda-designation-forest-antibiotic-211503645.html")
+soup=BeautifulSoup(driver.page_source)
+
+#===============
+#info = soup.find_all(['p', 'br', text = True]) #<-------------------------------------------------------------------------------------------------------------------
+
+info = soup.find_all(text = True)  #<---NEW
+
+for item in info:
+	#print(item.text).encode('utf-8',errors='ignore'))
+
+	#===NEW
+	if "placebo-controlled study" in item.text:
+		print(item.name)
+
+	#====
+	#print(item.encode('utf-8',errors='ignore'))  #<--- NEW
+print("--------------------------")
+
+#===============
+
+
+for item in info:
+	l = item.text #.encode('utf-8',errors='ignore')
+	t = 0
+	if find_End_LINK (l):
+		break
+
+	#if l != " ":
+	#if not contains_zacks_exclude_markers (l):
+	l = l.encode('utf-8',errors='ignore')
+	print(l)
+
+

@@ -1,0 +1,46 @@
+#import urllib.request
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+from bs4 import BeautifulSoup
+import re
+import csv
+
+
+
+driver = webdriver.Firefox()
+driver.get("http://finance.yahoo.com/news/zacks-analyst-blog-highlights-ironwood-111505661.html")
+soup=BeautifulSoup(driver.page_source)
+
+#===============
+
+#info = soup.find_all(text = True)  #<---NEW
+#info = info.find_all(text = 'linaclotide')
+#info = soup.find(text=re.compile('Chicago, IL – September 17, 2013'))
+
+info = soup.find_all(style="text-align: justify;")
+
+
+
+
+#info = soup.find_all(id="yui_3_9_1_19_1381641687529_251")
+
+#print(info.encode('ascii',errors='ignore'))
+#print(info.parent)
+for item in info:
+	print(item.text.encode('ascii',errors='ignore'))
+	print("--", item.name)
+	#print(info.parent.encode('ascii',errors='ignore'))
+#i = 0
+
+#for item in info:
+	#print("START---", i, "---")
+	#print(item.encode('utf-8',errors='ignore'))
+	#print(item.name)
+	#print("END---", i, "---")
+	#i = i+1
+
+#print(item.name)
+
+
+#===============

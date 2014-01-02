@@ -1,0 +1,6 @@
+import csv
+newsLine = ['Wednesday', 'September', '25', '2013', 'QCOR', b'Analysts: Boeing Is Inexpensive and 3 Other Research Notes to Browse', b'Wall St. Cheat Sheet', b'http://us.rd.yahoo.com/finance/external/xwscheats/SIG=13el6mjaa/*http://wallstcheatsheet.com/stocks/analysts-boeing-is-inexpensive-and-3-other-research-notes-to-browse.html/?ref=YF']
+
+with open('test.csv', 'w', newline='') as csvfile:
+	writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_NONE)
+	writer.writerow( newsLine ) #<----- inside the indent

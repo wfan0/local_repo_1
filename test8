@@ -1,0 +1,12 @@
+from bs4 import BeautifulSoup
+
+l = """<li><a href="http://us.rd.yahoo.com/finance/external/xwscheats/SIG=13tqrmr4e/*http://wallstcheatsheet.com/stocks/analysts-agilents-split-may-increase-value-and-3-other-research-notes-to-check-out.html/?ref=YF">Analysts: Agilent\xe2\x80\x99s Split May Increase Value and 3 Other Research Notes to Check Out</a><cite>at Wall St. Cheat Sheet\xc2\xa0<span>(Fri, Sep 20)</span></cite></li>"""
+
+soup = BeautifulSoup(l)
+headline = soup.find('a').text.encode('ascii',errors='ignore')
+
+
+#headline = soup.find('a').text #.encode('utf-8')
+
+
+print(headline)

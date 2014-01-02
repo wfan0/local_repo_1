@@ -1,0 +1,56 @@
+import scipy as sp
+import csv
+
+def preprocess_yahoo_data(file): 
+	results = []
+	with open(file, newline = '') as fid:
+		ct = 0
+		for row in csv.reader(fid):
+			if ct == 0:
+				pass
+			if ct > 0:
+				for i in range(0,6):
+					if i == 0:
+						row[0] = row[0].replace("-", "")
+					else:
+						row[1] = float(row[1])
+						row[2] = float(row[2])
+						row[3] = float(row[3])
+						row[4] = float(row[4])
+						row[5] = float(row[5])
+						row[6] = float(row[6])
+
+				results.append(row)
+			ct = ct +1
+	return results
+
+
+results = []
+results = preprocess_yahoo_data("C:\\Users\\William\\Desktop\\DANG_W.csv")
+
+
+"""
+with open("C:\\Users\\William\\Desktop\\DANG_W.csv", newline = '') as fid:
+	ct = 0
+	for row in csv.reader(fid):
+		if ct == 0:
+			pass
+		if ct > 0:
+			for i in range(0,6):
+				if i == 0:
+					row[0] = row[0].replace("-", "")
+				else:
+					row[1] = float(row[1])
+					row[2] = float(row[2])
+					row[3] = float(row[3])
+					row[4] = float(row[4])
+					row[5] = float(row[5])
+					row[6] = float(row[6])
+
+			results.append(row)
+		ct = ct +1
+
+"""
+print(results[0])
+
+

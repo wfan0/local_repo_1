@@ -1,0 +1,79 @@
+#import urllib.request
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+from bs4 import BeautifulSoup
+import re
+import csv
+
+
+
+def ConvertToMilitaryTime_EDT (line) :
+	#Given: '6:40 PM EDT'
+	colon_Loc = line.find(":")
+	space_Loc = line.find(" ")
+	space_Loc_2 = line.rfind(" ") #<---------------
+
+	hour = line[:colon_Loc]
+	minute = line[colon_Loc+1:space_Loc]
+	Am_PM = line[space_Loc+1:space_Loc_2]
+	timeZone = line[space_Loc_2+1:]
+
+	mil_time = []
+	#12:01AM = 0001 hours	
+
+	#if len(hour) == 1:
+		#hour = "0"+ hour	
+
+	if Am_PM == 'AM':
+		if len(hour) == 1:
+			hour = "0" + hour
+		
+		mil_time = hour + minute
+
+	if Am_PM == 'PM':
+		if len(hour) == 1:
+			hour = int(hour)*100
+
+		mil_time =  1200 + int(hour) + int(minute) 
+
+	#TimeArray = [hour,minute,Am_PM,timeZone]
+	#return TimeArray	
+
+	return mil_time
+	
+
+
+
+
+
+str = "Fri, Oct 11, 2013, 6:40 PM EDT - U.S. Markets closed"
+
+AM_PM_Loc = []
+list = []
+ut = []
+for i in range(len(str)):
+	if ',' == str[i]:
+		list.append(i)
+for i in range(len(str)):
+	#print(str[i:i+2],'----')
+	if 'AM' == str[i:i+2] or 'PM' == str[i:i+2]:
+		AM_PM_Loc = i+2
+
+comma1 = list[0]
+comma2 = list[1]
+comma3 = list[2]
+
+ShortDayName = str[:comma1]	
+MonthAndDate = str[comma1+2:comma2]
+spaceLoc = MonthAndDate.find(' ')
+Month = MonthAndDate[:spaceLoc]
+DayNum = MonthAndDate[spaceLoc+1:]
+Year = str[comma2+2:comma3]
+Time= str[comma3+2:AM_PM_Loc+4]
+
+
+#out = [ShortDayName,Month,DayNum]
+out = [ShortDayName,Month,DayNum,Year,ConvertToMilitaryTime_EDT (Time)]
+
+print(out)

@@ -1,0 +1,10 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+#Next, the instance of Firefox WebDriver is created.
+driver = webdriver.Firefox()
+
+driver.get("http://money.msn.com/")
+elem = driver.find_element_by_id("txtqbe")
+elem.send_keys("AMGN")
+elem.send_keys(Keys.RETURN)

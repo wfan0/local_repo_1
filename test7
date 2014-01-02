@@ -1,0 +1,10 @@
+from bs4 import BeautifulSoup
+
+
+l = """<span id="yfs_params_vcr" style="display:none">{"yrb_token" : "YFT_MARKET_CLOSED", "tt" : "1380231747", "s" : "qcor", "k" : "a00,a50,b00,b60,c10,c63,c64,c85,c86,g00,g53,h00,h53,l10,l84,l85,l86,p20,p43,p44,t10,t53,t54,v00,v53", "o" : "^dji,^ixic", "j" : "c10,l10,p20,t10", "version" : "1.0", "market" : {"NAME" : "U.S.", "ID" : "us_market", "TZ" : "EDT", "TZOFFSET" : "-14400", "open" : "", "close" : "", "flags" : {}} , "market_status_yrb" : "YFT_MARKET_CLOSED" , "portfolio" : { "fd" : { "txns" : [ ]},"dd" : "","pc" : "","pcs" : ""}, "STREAMER_SERVER" : "http://streamerapi.finance.yahoo.com", "DOC_DOMAIN" : "finance.yahoo.com", "localize" : "0" , "throttleInterval" : "1000" , "arrowAsChangeSign" : "true" , "up_arrow_icon" : "http://l.yimg.com/a/i/us/fi/03rd/up_g.gif" , "down_arrow_icon" : "http://l.yimg.com/a/i/us/fi/03rd/down_r.gif" , "up_color" : "green" , "down_color" : "red" , "pass_market_id" : "0" , "mu" : "1" , "lang" : "en-US" , "region" : "US" }</span>'
+---> b'<span id="yfs_enable_chrome" style="display:none">1</span>"""
+
+soup = BeautifulSoup(l)
+print(soup.text)
+if "token" in soup.text:
+	print("ok")

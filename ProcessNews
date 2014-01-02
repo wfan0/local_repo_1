@@ -1,0 +1,24 @@
+import sys
+#print(sys.path)
+#sys.path.append("C:\\Users\\William\\Desktop\\PythonCode\\test3_official")
+#sys.path.append("C:\\Users\\William\\Desktop\\PythonCode")
+#print(sys.path)
+
+#import my_long_module as m ALIAS
+import csv
+import test3_official #import  create_text_file_name *
+#from test3_official import *
+#C:\Users\William\Desktop\PythonCode\test3_official
+
+
+#print pythonFunction.function()
+# or from pythonFunction import function
+	# print function() # no need for pythonFunction.
+#name = test3_official.create_text_file_name("CSCO")
+#print(name)
+#further analysis
+
+"""with open( name, "rb" ) as theFile:
+    reader = csv.DictReader( theFile )
+    for line in reader:
+    	print(line)"""

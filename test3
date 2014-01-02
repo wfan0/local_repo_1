@@ -1,0 +1,172 @@
+#import urllib.request
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+from bs4 import BeautifulSoup
+import re
+
+month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']	
+#Next, the instance of Firefox WebDriver is created.
+driver = webdriver.Firefox()
+
+
+driver.get("http://finance.yahoo.com/")
+elem = driver.find_element_by_id("txtQuotes")
+elem.send_keys("QCOR")
+elem.send_keys(Keys.RETURN)
+time.sleep(0.80)
+driver.find_element_by_partial_link_text("Headlines").click()
+time.sleep(0.80)
+
+soup=BeautifulSoup(driver.page_source)
+val = 0
+startCt = 0
+endCt = 0
+
+def find_Open_Ct (info) :
+	#month_names already defined
+	startCt = 0
+	for line in info:
+		startCt = startCt + 1
+		if line.name == "span":
+			for m in month_names:
+				if m in line.text: 
+					return startCt -1
+
+def find_End_Ct (info) :
+	#Ending looks like this: b'<span>AdChoices</span>' or like this: '<span id="yfs_params_vcr" style="display:none">{"yrb_token" : "YFT_MARKET_CLOSED", "tt" : "1380231285", "s" : "qcor", "k" : "a'
+	EndCt = 0
+	for line in info:
+		EndCt = EndCt + 1
+		if line.name == "span" and 'AdChoices' in line.text:
+			return EndCt - 1
+		if line.name == "span" and 'yrb_token' in line.text:
+			return EndCt - 1
+
+
+info = soup.find_all(['span', 'li'])
+
+startCt = find_Open_Ct(info)
+endCt = find_End_Ct (info)
+
+#print(len(info))
+#print(startCt)
+#print(endCt)
+
+currDateStamp = ''
+headline = ''
+link = ''
+newCitation = ''
+
+for item in info[startCt:endCt]:
+	#print('--->', item.encode('utf-8'))
+
+	if item.name == "span":
+		for m in month_names:
+			if m in item.text:	
+				currDateStamp = item.text.encode('utf-8')
+				#print(currDateStamp)
+	if item.name == "li":
+		#for citation
+		citation = item.find('cite').text
+		parens = citation.find('(')
+		newCitation = citation[0:parens-1] #extra one space back to remove encoding error
+
+		#removing 'at' from 'at Wall St. Cheat Sheet' if 'at' is present
+		if 'at ' in newCitation:
+			newCitation = newCitation[3:]
+		
+		#encode newCitation after manipulation in teh if statement
+		newCitation = newCitation.encode('utf-8')
+		
+
+		#get headline name
+		headline = item.find('a').text.encode('ascii',errors='ignore')
+
+		#try:
+			#TestHeadline = headline.encode('utf-8')
+			#print('OMGOMGOMG', headline)
+			#TestHeadline = TestHeadline.replace(u'\xc2\xa0', u' ')
+		#except:
+			#TestHeadline = TestHeadline[0:parens-2]		
+
+		
+		#get link
+		link = item.find('a').get('href').encode('utf-8') #<------
+		
+
+	if currDateStamp and headline and link and newCitation:
+		print(currDateStamp, headline, link, newCitation)
+		headline = ''
+		link = ''
+		newCitation = ''
+
+
+
+
+#b'<span>Wednesday, September 25, 2013</span>'
+#Home
+#http://us.lrd.yahoo.com/_ylt=AvH.CdwQX6U5rypAMylCiMGuv7gF/SIG=119r32ntr/EXP=1381429544/**http%3A//www.yahoo.com/
+
+
+#for line in soup.find_all(['span', 'li']):
+	#startCt = startCt + 1
+	#print(line.getText().encode('utf-8'))
+	#if line.name == "span":
+		#for m in month_names:
+			#if m in line.text:	
+				#val = 5
+	#if line.name == "li":
+		#val = 2
+
+	#print(val,line.encode('utf-8'))
+	#print(val, line.encode('utf-8'))
+
+
+	#print(spans.get('attr'))
+
+
+
+
+
+	#strs = spans.findAll(text=True)
+	#for s in strs:
+		#for monthNames in month_names:
+			#if monthNames in s:
+				#print(s)
+
+
+
+
+#for spans in soup.find_all('span', text = "September"):
+	#for monthName in month_names:
+		#if monthName in spans:
+			#print(spans.encode('utf-8'))
+
+
+#in soup.find_all('span')
+#soupW.find_all(["a", "b"])
+
+
+#	p = spans.parent
+
+#b'<span>Wednesday, September 11, 2013</span>' basically, if the span contains a (full name of weekdate like Wednesday), then a Month name, then a 4 digit #. This is a sign that the tag is what you are looking for
+
+#b'<span>(Wed, Sep 11)</span>'
+
+
+#print(soup.prettify())
+
+#for link in soup.find_all('li'):
+    #print(link)
+
+#A function -> used to define a function, see the website http://www.crummy.com/software/BeautifulSoup/bs4/doc/#a-regular-expression
+
+#soup.find_all('a')
+#print soup.encode('utf-8')
+#print(soup.prettify())
+#print(soup.find_all("a"))
+#print(soup.get_text())
+
+#for link in soup.find_all('li'):
+    #print(link.get('href'))

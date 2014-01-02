@@ -1,0 +1,41 @@
+#import urllib.request
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+from bs4 import BeautifulSoup
+import re
+import csv
+
+month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']	
+#Next, the instance of Firefox WebDriver is created.
+driver = webdriver.Firefox()
+
+driver.get("http://finance.yahoo.com/")
+elem = driver.find_element_by_id("txtQuotes")
+elem.send_keys("QCOR")
+elem.send_keys(Keys.RETURN)
+time.sleep(1.5)
+
+driver.find_element_by_partial_link_text("Headlines").click()
+time.sleep(1.5)
+
+
+soup=BeautifulSoup(driver.page_source)
+info = soup.find_all('a')
+for item in info:
+	if "Older Headlines" in item.text:
+		link = "http://finance.yahoo.com" + item.get('href')
+		print(link)
+		break
+
+driver.get(link)
+
+soup=BeautifulSoup(driver.page_source)
+info = soup.find_all('a')
+for item in info:
+	if "Older Headlines" in item.text:
+		link = "http://finance.yahoo.com" + item.get('href')
+		print(link)
+		break
+
+driver.get(link)			

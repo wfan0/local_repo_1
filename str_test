@@ -1,0 +1,63 @@
+#args = [3, 6]
+#print(range(*args))         # call with arguments unpacked from a list
+
+sentence = 'It is raining cats and dogs'
+words = sentence.split()
+lengths = map(lambda word: len(word), words) #map object
+for i in lengths:
+	print (i)
+
+print("-" * 40)
+
+num_list = range(0,100)
+list = filter(lambda x: x > 20, num_list) #filter object
+for i in list:
+	print (i)
+
+p = [1,2,3]
+pp = [4,5,6]
+p.extend(pp)
+
+print(p)
+
+z = [None for _ in range(10)] #empty list w/ ten elements
+z.insert(1,"one")
+print(z)
+
+z = [{} for i in range(10)] #empty list of 10 dicts **** [{}]*10 -- that would give you a list with the same initially-empty dict ten times, not ten distinct ones.
+z.insert(1,"one")
+print(z)
+
+
+t = [i for i in range(2, 8)]
+print(t)
+
+
+noprimes = [j for i in range(2,8) for j in range(i*2, 50, i)]
+primes = [x for x in range(2,50) if x not in noprimes]
+print (primes)
+
+from collections import deque
+queue = deque(["a", "b", "c"])
+print(queue.popleft())
+
+q = ("rofl", 1,2) #tuple, often used for heterogeneous mixing kinda liek cells from matlab. Acessed over unpacking v iterating, immuatble
+a,b,c = q
+print(a)
+print(b)
+print(c)
+
+tel = {'jack': 4098, 'sape': 4139}
+tel2 = {'jack': 1, 'sape': 2}
+print(tel)
+print (len(tel))
+print(sorted(tel.keys()))
+print(str(tel))
+print(type(tel))
+
+dict1 = {'Name': 'Zara', 'Age': 7};
+dict2 = {'Name': 'Mahnaz', 'Age': 27};
+
+shared_items = set(dict1.items()) & set(dict2.items())
+print (len(shared_items))
+
